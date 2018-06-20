@@ -70,6 +70,9 @@ public class RetrofitClientUtil {
         if (service == null) {
             throw new RuntimeException("Api service is null!");
         }
+        if (sRetrofit == null) {
+            return null;
+        }
         return sRetrofit.create(service);
     }
 

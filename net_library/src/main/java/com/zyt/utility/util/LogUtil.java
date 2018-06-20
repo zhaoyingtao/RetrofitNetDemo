@@ -4,6 +4,8 @@ import android.content.Context;
 import android.content.pm.ApplicationInfo;
 import android.util.Log;
 
+import com.zyt.utility.LibraryApplication;
+
 /**
  * Created by zyt on 2017/4/7.
  * 打印日志

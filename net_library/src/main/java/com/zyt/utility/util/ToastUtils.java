@@ -8,6 +8,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.zyt.utility.LibraryApplication;
 import com.zyt.utility.R;
 
 /**
@@ -18,7 +19,7 @@ public class ToastUtils {
     private static ToastUtils mToastUtils;
     private Toast mToast;
 
-    public static ToastUtils getInstance() {
+    public static ToastUtils init() {
         if (mToastUtils == null) {
             synchronized (ToastUtils.class) {
                 if (mToastUtils == null) {
@@ -43,6 +44,10 @@ public class ToastUtils {
         mToast.show();
     }
 
+    /**
+     * 显示string文件中的文本
+     * @param messResID R.string.xxxx
+     */
     public void showToast(int messResID) {
         if (mToast == null) {
             mToast = Toast.makeText(LibraryApplication.getInstance(), LibraryApplication.getInstance().getResources().getString(messResID), Toast.LENGTH_SHORT);

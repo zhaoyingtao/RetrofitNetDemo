@@ -13,7 +13,7 @@ import java.util.regex.Pattern;
 public class VerificationUtils {
     private static VerificationUtils verificationUtils;
 
-    public static VerificationUtils getInstance() {
+    public static VerificationUtils init() {
         if (verificationUtils == null) {
             synchronized (VerificationUtils.class) {
                 if (verificationUtils == null) {

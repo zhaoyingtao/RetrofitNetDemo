@@ -14,12 +14,25 @@ import java.util.Locale;
  */
 
 public class SystemUtil {
+    private static SystemUtil systemUtil;
+
+    public static SystemUtil init() {
+        if (systemUtil == null) {
+            synchronized (SystemUtil.class) {
+                if (systemUtil == null) {
+                    systemUtil = new SystemUtil();
+                }
+            }
+        }
+        return systemUtil;
+    }
+
     /**
      * 获取当前手机系统语言。
      *
      * @return 返回当前系统语言。例如：当前设置的是“中文-中国”，则返回“zh-CN”
      */
-    public static String getSystemLanguage() {
+    public String getSystemLanguage() {
         return Locale.getDefault().getLanguage();
     }
 
@@ -28,7 +41,7 @@ public class SystemUtil {
      *
      * @return 语言列表
      */
-    public static Locale[] getSystemLanguageList() {
+    public  Locale[] getSystemLanguageList() {
         return Locale.getAvailableLocales();
     }
 
@@ -37,7 +50,7 @@ public class SystemUtil {
      *
      * @return 系统版本号
      */
-    public static String getSystemVersion() {
+    public String getSystemVersion() {
         return android.os.Build.VERSION.RELEASE;
     }
 
@@ -46,7 +59,7 @@ public class SystemUtil {
      *
      * @return 手机型号
      */
-    public static String getSystemModel() {
+    public String getSystemModel() {
         return android.os.Build.MODEL;
     }
 
@@ -55,7 +68,7 @@ public class SystemUtil {
      *
      * @return 手机厂商
      */
-    public static String getDeviceBrand() {
+    public String getDeviceBrand() {
         return android.os.Build.BRAND;
     }
 
@@ -65,7 +78,7 @@ public class SystemUtil {
      * @return 手机IMEI
      */
     @SuppressLint({"HardwareIds", "MissingPermission"})
-    public static String getIMEI(Context ctx) {
+    public static String getPhoneIMEI(Context ctx) {
         TelephonyManager tm = (TelephonyManager) ctx.getSystemService(Activity.TELEPHONY_SERVICE);
         if (tm != null) {
             return tm.getDeviceId();
