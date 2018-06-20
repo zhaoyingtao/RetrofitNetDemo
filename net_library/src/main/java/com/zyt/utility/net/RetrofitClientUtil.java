@@ -60,6 +60,20 @@ public class RetrofitClientUtil {
     }
 
     /**
+     * 创建网络请求接口实例
+     *
+     * @param service
+     * @param <T>
+     * @return
+     */
+    public static <T> T create(Class<T> service) {
+        if (service == null) {
+            throw new RuntimeException("Api service is null!");
+        }
+        return sRetrofit.create(service);
+    }
+
+    /**
      * 改变baseurl
      *
      * @param newApiBaseUrl
