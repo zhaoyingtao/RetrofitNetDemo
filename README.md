@@ -1,34 +1,34 @@
 # RetrofitNetDemo
-这是一个基于retrofit的网络请求再度封装，附带了一些基本的utils公用类；
+这是一个基于retrofit的网络请求再度封装；  
+功能：  
+1、可以更改baseUrl；  
+2、某一个请求长时间无返回值时，取消此请求，判断是否正在请求某一个api  
 
-一、项目的Application必须继承依赖库的LibraryApplication，否则有些公用类不能使用可能会造成崩溃；
+一、在项目中直接引入
 
-二、在项目中直接引入
+compile 'com.bintray.library:net_library:1.1.0'
 
-compile 'com.bintray.library:net_library:1.0.0'
+二、代码中使用
+在项目的Application的oncreate方法中初始化：  
+```//初始化网络请求
+  RetrofitClientUtil.initClient(this).changeApiBaseUrl("你的baseUrl");
+  ```
 
-三、代码中使用
+三、其他代码使用范例  
+最好复制项目中的ApiEnvironmentMgr类、BaseApiService类和BaseAppPresenter类，可以适当修改；
+直接查看项目中的ApiEnvironmentMgr类（主要做切换服务器使用）和BaseApiService类（存放请求api)  
+四、取消api的方法  
+`RxApiManager.get().cancel("请求api的flag");`  
+判断是否正在请求某一个api  
+` RxApiManager.get().isRequestingApi("请求api的flag");`
 
-1、需要在你的app中创建一个接口类存放接口：例如：BaseApi
-
-public interface BaseApi {
-
-    //    服务器的baseurl
-    String Base_URL = "https://xxxxxxxxx/";
-
-    //get请求方法
-    @GET("接口名")
-    Observable<JsonObject> getData(@Query("token") String token);
-
-    //post的请求需要根据后台接收方式不同使用不同的传参（除了这俩种方法还有其他方法自行百度吧）
-    //post请求方法
-    @Multipart
-    @POST("接口名")
-    Observable<JsonObject> getPostData(@PartMap Map<String, RequestBody> params);
-
-    //post的另一种请求方法
-    @FormUrlEncoded
-    @POST("接口名")
-    Observable<JsonObject> getPostData(@Field("Id") String Id, @Field("Comment") String Comment);
-}
-
+五、注意⚠️  
+依赖库使用了  
+```
+compile 'com.squareup.retrofit2:retrofit:2.3.0'
+compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+compile 'com.squareup.retrofit2:adapter-rxjava:2.3.0'
+compile 'io.reactivex:rxandroid:1.2.1'
+compile 'io.reactivex:rxjava:1.3.2'
+ ```
+ 如果您的项目也使用了这几个依赖库，可以删掉你的build.gradle中的依赖；或者找其他解决冲突方法
