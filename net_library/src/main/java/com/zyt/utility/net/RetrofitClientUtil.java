@@ -1,14 +1,11 @@
 package com.zyt.utility.net;
 
 import android.content.Context;
-import android.text.TextUtils;
-import android.util.Log;
 
-import java.io.File;
-import java.util.Map;
+import com.zyt.utility.NetConstant;
+
 import java.util.concurrent.TimeUnit;
 
-import okhttp3.Cache;
 import okhttp3.ConnectionPool;
 import okhttp3.OkHttpClient;
 import retrofit2.Retrofit;
@@ -22,10 +19,9 @@ public class RetrofitClientUtil {
     private static final int DEFAULT_TIMEOUT = 20;//请求超时时间
     private static OkHttpClient sOkHttpClient;
     public static Context mContext;
-
     private static Retrofit sRetrofit;
-
     private static RetrofitClientUtil retrofitClientUtil;
+
 
     private RetrofitClientUtil(Context context) {
         sOkHttpClient = new OkHttpClient.Builder()
@@ -41,7 +37,7 @@ public class RetrofitClientUtil {
                 .build();
     }
 
-    private static RetrofitClientUtil getSimpleRetrofitClicent(Context context) {
+    private static RetrofitClientUtil getSimpleRetrofitClient(Context context) {
         if (retrofitClientUtil == null) {
             synchronized (RetrofitClientUtil.class) {
                 if (retrofitClientUtil == null) {
@@ -52,26 +48,25 @@ public class RetrofitClientUtil {
         return retrofitClientUtil;
     }
 
-    public static RetrofitClientUtil getInstance(Context context) {
-        if (context != null) {
-            mContext = context;
-        }
-        return getSimpleRetrofitClicent(context);
-    }
-
     /**
-     * 创建网络请求接口实例
-     *
-     * @param service
-     * @param <T>
+     * 必须传入application的context
+     * @param context
      * @return
      */
-    public static <T> T create(Class<T> service) {
+    public static RetrofitClientUtil initClient(Context context) {
+        if (context != null) {
+            mContext = context;
+            NetConstant.applicationContext = context;
+        }
+        return getSimpleRetrofitClient(context);
+    }
+
+    public <T> T create(final Class<T> service) {
         if (service == null) {
             throw new RuntimeException("Api service is null!");
         }
         if (sRetrofit == null) {
-            return null;
+            throw new RuntimeException("sRetrofit is null! you should init Retrofit");
         }
         return sRetrofit.create(service);
     }
@@ -79,23 +74,14 @@ public class RetrofitClientUtil {
     /**
      * 改变baseurl
      *
-     * @param newApiBaseUrl
+     * @param apiUrl apiurl不规范不是正确格式会直接崩溃
      */
-    public static void changeApiBaseUrl(String newApiBaseUrl) {
+    public void changeApiBaseUrl(String apiUrl) {
         sRetrofit = new Retrofit.Builder()
                 .client(sOkHttpClient)
                 .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
                 .addConverterFactory(CustomConverterFactory.create())
-                .baseUrl(newApiBaseUrl)
+                .baseUrl(apiUrl)
                 .build();
-    }
-
-    /**
-     * 获得Retrofit对象
-     *
-     * @return
-     */
-    public static Retrofit getRetrofit() {
-        return sRetrofit;
     }
 }

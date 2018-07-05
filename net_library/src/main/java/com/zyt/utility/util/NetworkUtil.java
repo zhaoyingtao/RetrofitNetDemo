@@ -10,26 +10,13 @@ import android.telephony.TelephonyManager;
  */
 
 public class NetworkUtil {
-    private static NetworkUtil networkUtil;
-
-    public static NetworkUtil init() {
-        if (networkUtil == null) {
-            synchronized (NetworkUtil.class) {
-                if (networkUtil == null) {
-                    networkUtil = new NetworkUtil();
-                }
-            }
-        }
-        return networkUtil;
-    }
-
     /**
      * 是否有网络
      *
      * @param mContext
      * @return true有 false 没有
      */
-    public boolean isNetworkAvailable(Context mContext) {
+    public static boolean isNetworkAvailable(Context mContext) {
         ConnectivityManager manager = (ConnectivityManager) mContext.getSystemService(Context.CONNECTIVITY_SERVICE);
         if (manager == null) {
             return false;
@@ -48,7 +35,7 @@ public class NetworkUtil {
      * @param context
      * @return
      */
-    public int getNetWorkType(Context context) {
+    public static int getNetWorkType(Context context) {
         //结果返回值
         int netType = 0;
         //获取手机所有连接管理对象
