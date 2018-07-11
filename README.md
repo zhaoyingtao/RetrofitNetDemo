@@ -1,4 +1,5 @@
 # RetrofitNetDemo
+[ ![Download](https://api.bintray.com/packages/zhaoyingtao/maven/net_library/images/download.svg) ](https://bintray.com/zhaoyingtao/maven/net_library/_latestVersion)  
 这是一个基于retrofit的网络请求再度封装；  
 功能：  
 1、可以更改baseUrl；  
