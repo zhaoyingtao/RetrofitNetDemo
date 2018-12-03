@@ -6,4 +6,5 @@ package com.zyt.utility.netbase;
 
 public interface BaseView {
 //    void showError(String msg);
+
 }

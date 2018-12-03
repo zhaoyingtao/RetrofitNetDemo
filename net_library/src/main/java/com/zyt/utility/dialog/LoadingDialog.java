@@ -34,8 +34,12 @@ public class LoadingDialog extends Dialog {
     }
 
     public void showLoading() {
-        if (mContext == null || ((Activity) mContext).isFinishing()) {
+        if (mContext == null) {
             return;
+        }
+        if (mContext instanceof Activity) {
+            if (((Activity) mContext).isFinishing())
+                return;
         }
         if (!isShowing()) {
             show();

@@ -1,6 +1,7 @@
 package com.zyt.utility.netbase;
 
 import android.content.Context;
+import android.widget.Toast;
 
 import com.zyt.utility.NetConstant;
 import com.zyt.utility.util.NetworkUtil;
@@ -25,10 +26,12 @@ public abstract class BasePresenter<V extends BaseView> {
     }
 
     protected void attachView(Context mContext, V view) {
+        this.mContext = mContext;
         this.view = view;
+    }
+    protected void attachView(Context mContext) {
         this.mContext = mContext;
     }
-
     protected void detachView() {
         this.view = null;
         onUnSubsribe();
@@ -41,8 +44,9 @@ public abstract class BasePresenter<V extends BaseView> {
         }
     }
 
-    public void addSubscription(Observable observable, Subscriber subscriber) {
+    protected void addSubscription(Observable observable, Subscriber subscriber) {
         if (!NetworkUtil.isNetworkAvailable(NetConstant.applicationContext)) {
+            Toast.makeText(mContext, "网络无连接，请检查网络", Toast.LENGTH_SHORT).show();
             return;
         }
         if (mCompositeSubscription == null) {

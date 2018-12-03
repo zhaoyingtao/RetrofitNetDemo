@@ -2,8 +2,6 @@ package com.zyt.utility.net;
 
 import com.google.gson.Gson;
 
-import org.json.JSONException;
-
 import java.io.IOException;
 import java.lang.reflect.Type;
 
@@ -32,21 +30,22 @@ public class GsonResponseBodyConverter<T> implements Converter<ResponseBody, T> 
 //        Log.e("Gson", "-------------------" + response);
 
 //        StrUtil.saveStrToFile(response);
-        try {
-            org.json.JSONObject jsonObject = new org.json.JSONObject(response);
-            String data = jsonObject.optString("data");
-            if ("false".equals(data)) {
-//                return null;
-                jsonObject.remove("data");
-                org.json.JSONObject dataJson = new org.json.JSONObject();
-
-                jsonObject.put("data", dataJson);
-                return gson.fromJson(jsonObject.toString(), type);
-            }
-            return gson.fromJson(response, type);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        throw new IOException();
+//        try {
+//            org.json.JSONObject jsonObject = new org.json.JSONObject(response);
+//            String data = jsonObject.optString("data");
+//            if ("false".equals(data)) {
+////                return null;
+//                jsonObject.remove("data");
+//                org.json.JSONObject dataJson = new org.json.JSONObject();
+//
+//                jsonObject.put("data", dataJson);
+//                return gson.fromJson(jsonObject.toString(), type);
+//            }
+//            return gson.fromJson(response, type);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+        return gson.fromJson(response, type);
+//        throw new IOException();
     }
 }

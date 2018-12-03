@@ -75,4 +75,26 @@ public class NetworkUtil {
         }
         return netType;
     }
+
+    /**
+     * 添加请求头的网络状态
+     * @param context
+     * @return
+     */
+    public static String getNetWorkStatus(Context context) {
+        int netWorkType = getNetWorkType(context);
+        //没有网络-0：WIFI网络1：4G网络-4：3G网络-3：2G网络-2
+        switch (netWorkType) {
+            case 1:
+                return "WIFI";
+            case 2:
+                return "2G";
+            case 3:
+                return "3G";
+            case 4:
+                return "4G";
+            default:
+                return "没有网络";
+        }
+    }
 }
